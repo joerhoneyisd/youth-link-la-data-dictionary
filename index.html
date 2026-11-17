@@ -1,0 +1,758 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Youth Link LA – Data Dictionary</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+      :root {
+        --ink: #14142b;
+        --mut: #66657a;
+        --o: #fd9e53;
+        --p: #e34aa1;
+        --v: #7149df;
+        --line: #e6e5ee;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font:
+          14px/1.55 Inter,
+          system-ui,
+          -apple-system,
+          "Segoe UI",
+          Arial,
+          sans-serif;
+        color: var(--ink);
+        background: #fff;
+      }
+      .bar {
+        height: 8px;
+        background: linear-gradient(90deg, var(--o), var(--p), var(--v));
+      }
+      main {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 36px 28px 56px;
+      }
+      h1 {
+        font-size: 34px;
+        line-height: 1.15;
+        margin: 0 0 6px;
+        letter-spacing: -0.02em;
+      }
+      h2 {
+        font-size: 20px;
+        margin: 40px 0 12px;
+        letter-spacing: -0.01em;
+      }
+      .sub {
+        color: var(--mut);
+        margin: 0 0 22px;
+        max-width: 70ch;
+      }
+      .rules {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 14px;
+      }
+      .rules div {
+        border-left: 4px solid var(--v);
+        padding: 4px 0 4px 14px;
+      }
+      .rules div:nth-child(2) {
+        border-color: var(--p);
+      }
+      .rules div:nth-child(3) {
+        border-color: var(--o);
+      }
+      .rules b {
+        display: block;
+        margin-bottom: 2px;
+      }
+      .rules p {
+        margin: 0;
+        color: var(--mut);
+      }
+      .lists {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 18px;
+      }
+      .lists h3 {
+        font-size: 14px;
+        margin: 0 0 8px;
+      }
+      .lists span {
+        display: inline-block;
+        margin: 0 6px 6px 0;
+        padding: 3px 10px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: #faf9fe;
+      }
+      .tw {
+        overflow-x: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      thead th {
+        text-align: left;
+        font-size: 13px;
+        color: var(--mut);
+        padding: 8px 10px;
+        border-bottom: 2px solid var(--ink);
+        position: sticky;
+        top: 0;
+        background: #fff;
+      }
+      td {
+        vertical-align: top;
+        padding: 10px;
+        border-bottom: 1px solid var(--line);
+      }
+      td.n {
+        color: var(--mut);
+        width: 30px;
+      }
+      td.f {
+        width: 230px;
+      }
+      td.m {
+        color: var(--mut);
+        width: 24%;
+      }
+      tr.g th {
+        text-align: left;
+        background: #f6f4fd;
+        color: var(--v);
+        padding: 9px 10px;
+        font-size: 14px;
+        border-bottom: 1px solid var(--line);
+      }
+      code {
+        font:
+          12.5px/1.45 ui-monospace,
+          SFMono-Regular,
+          Menlo,
+          Consolas,
+          monospace;
+        background: #f4f4f8;
+        padding: 2px 6px;
+        border-radius: 4px;
+        overflow-wrap: anywhere;
+      }
+      i {
+        font-style: normal;
+        font-size: 12px;
+        font-weight: 600;
+        padding: 1px 8px;
+        border-radius: 999px;
+        margin: 4px 6px 0 0;
+        display: inline-block;
+      }
+      i.req {
+        background: #efeafc;
+        color: var(--v);
+      }
+      i.con {
+        background: #fff1e6;
+        color: #b25a0f;
+      }
+      i.opt {
+        background: #f1f1f5;
+        color: var(--mut);
+      }
+      i.flt {
+        background: #fde8f3;
+        color: #b42278;
+      }
+      .note {
+        margin-top: 14px;
+        color: var(--mut);
+        font-size: 13px;
+      }
+      @media print {
+        @page {
+          size: landscape;
+          margin: 12mm;
+        }
+        main {
+          padding: 0;
+          max-width: none;
+        }
+        tr {
+          break-inside: avoid;
+        }
+        thead {
+          display: table-header-group;
+        }
+        thead th {
+          position: static;
+        }
+        h2 {
+          break-after: avoid;
+        }
+        .tw {
+          overflow: visible;
+        }
+        body {
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bar"></div>
+    <main>
+      <h1>Youth Link LA – Data Dictionary</h1>
+      <p class="sub">
+        How to fill in the program import spreadsheet. Use one row per program
+        per location. This version replaces the earlier Data Entry Key. Updated
+        November 2026.
+      </p>
+      <h2>Rules that apply everywhere</h2>
+      <div class="rules">
+        <div>
+          <b>Separators</b>
+          <p>
+            Use ; (semicolon) between multiple values. Use | (pipe) between the
+            parts of a structured value, and keep every pipe even when a part is
+            blank.
+          </p>
+        </div>
+        <div>
+          <b>Blank and “N/A”</b>
+          <p>
+            “N/A” is only valid where a field says so (Transportation
+            Assistance, Required Documents, Medi-Cal / Insurance). Everywhere
+            else, leave the cell blank.
+          </p>
+        </div>
+        <div>
+          <b>Filterable fields</b>
+          <p>
+            Service Category, Minimum Age, Maximum Age, Priority Populations,
+            SPA and Service Languages power search filters. A blank filterable
+            field means the row only appears when nothing is selected in that
+            filter. To appear under every selection, list every value. For ages,
+            blank means no limit.
+          </p>
+        </div>
+      </div>
+      <h2>Allowed values</h2>
+      <div class="lists">
+        <div>
+          <h3>Service Category</h3>
+          <span>Engagement</span><span>Education</span><span>Wellness</span
+          ><span>Workforce</span><span>Housing</span><span>Medical</span
+          ><span>Legal Resources</span>
+        </div>
+        <div>
+          <h3>Priority Program Populations</h3>
+          <span>Foster Youth</span><span>Justice-Involved</span
+          ><span>Pregnant or Parenting</span
+          ><span>Experiencing Homelessness</span><span>Students</span
+          ><span>LGBTQ+</span><span>Living with HIV</span>
+        </div>
+        <div>
+          <h3>Service Planning Area(s)</h3>
+          <span>SPA 1</span><span>SPA 2</span><span>SPA 3</span
+          ><span>SPA 4</span><span>SPA 5</span><span>SPA 6</span
+          ><span>SPA 7</span><span>SPA 8</span>
+        </div>
+        <div>
+          <h3>Service Languages</h3>
+          <span>English</span><span>Arabic</span><span>Armenian</span
+          ><span>Chinese</span><span>Farsi</span><span>Hindi</span
+          ><span>Japanese</span><span>Khmer/Cambodian</span><span>Korean</span
+          ><span>Russian</span><span>Spanish</span><span>Tagalog</span
+          ><span>Thai</span><span>Vietnamese</span>
+        </div>
+        <div>
+          <h3>Virtual / In-Person / Both</h3>
+          <span>Virtual</span><span>In-Person</span
+          ><span>Virtual and In-Person</span>
+        </div>
+        <div>
+          <h3>Listing Type</h3>
+          <span>Program</span><span>Event</span>
+        </div>
+      </div>
+      <p class="note">
+        Enter list values exactly as written, including capitalization and
+        hyphens.
+      </p>
+      <h2>Fields</h2>
+      <div class="tw">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Field</th>
+              <th>What to enter</th>
+              <th>Example</th>
+              <th>Common mistake</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="g">
+              <th colspan="5">Program and provider</th>
+            </tr>
+            <tr>
+              <td class="n">1</td>
+              <td class="f">
+                <b>Program</b>
+                <div><i class="req">Required</i></div>
+              </td>
+              <td>One program name.</td>
+              <td><code>Triple P</code></td>
+              <td class="m">
+                Adding a location or provider to the name; use the fields below.
+              </td>
+            </tr>
+            <tr>
+              <td class="n">2</td>
+              <td class="f">
+                <b>Location Name/Differentiator</b>
+                <div><i class="con">Conditional</i></div>
+              </td>
+              <td>
+                The branch, park or site that tells this row apart from other
+                rows of the same program. Required when a program has more than
+                one row.
+              </td>
+              <td><code>Anthony Quinn</code></td>
+              <td class="m">Putting the branch in Department/Office.</td>
+            </tr>
+            <tr>
+              <td class="n">3</td>
+              <td class="f">
+                <b>Provider/Delivery Facilitator</b>
+                <div><i class="opt">Optional</i></div>
+              </td>
+              <td>
+                The organization delivering the program, if different from the
+                department.
+              </td>
+              <td><code>Anthony Quinn Library</code></td>
+              <td class="m">Repeating the department name.</td>
+            </tr>
+            <tr>
+              <td class="n">4</td>
+              <td class="f">
+                <b>Department/Office</b>
+                <div><i class="req">Required</i></div>
+              </td>
+              <td>
+                One consistent name per department. No branch or site names.
+              </td>
+              <td><code>LA County Library</code></td>
+              <td class="m">
+                “LA County Library: Carson Library”; two spellings of one
+                department.
+              </td>
+            </tr>
+            <tr>
+              <td class="n">5</td>
+              <td class="f">
+                <b>Listing Type</b>
+                <div><i class="req">Required</i></div>
+              </td>
+              <td>Program or Event.</td>
+              <td><code>Program</code></td>
+              <td class="m">Any other value.</td>
+            </tr>
+            <tr class="g">
+              <th colspan="5">Category and audience</th>
+            </tr>
+            <tr>
+              <td class="n">6</td>
+              <td class="f">
+                <b>Service Category</b>
+                <div>
+                  <i class="req">Required</i><i class="flt">Filterable</i>
+                </div>
+              </td>
+              <td>
+                One or more values from the Service Category list, separated by
+                ; (semicolon). To appear under every category, list all seven.
+                Blank rows only appear when no category is selected.
+              </td>
+              <td><code>Housing; Engagement</code></td>
+              <td class="m">
+                “N/A”; commas or slashes between values; names not on the list.
+              </td>
+            </tr>
+            <tr>
+              <td class="n">7</td>
+              <td class="f">
+                <b>TAY-Friendly Description</b>
+                <div><i class="req">Required</i></div>
+              </td>
+              <td>
+                A short, plain-language description a young person can
+                understand. One paragraph.
+              </td>
+              <td>
+                <code>Career and life-skills support for emerging adults.</code>
+              </td>
+              <td class="m">
+                Line breaks; schedules or sub-program names inside the
+                description.
+              </td>
+            </tr>
+            <tr>
+              <td class="n">8</td>
+              <td class="f">
+                <b>Minimum Age</b>
+                <div>
+                  <i class="opt">Optional</i><i class="flt">Filterable</i>
+                </div>
+              </td>
+              <td>
+                Whole number 0–26: the youngest age of the person who applies or
+                participates (not the end recipient of an item). Leave blank for
+                no lower limit.
+              </td>
+              <td><code>18</code></td>
+              <td class="m">0 to mean “no minimum”; “N/A”.</td>
+            </tr>
+            <tr>
+              <td class="n">9</td>
+              <td class="f">
+                <b>Maximum Age</b>
+                <div>
+                  <i class="opt">Optional</i><i class="flt">Filterable</i>
+                </div>
+              </td>
+              <td>
+                Whole number 0–26: the oldest age of the person who applies or
+                participates. Leave blank for no upper limit. Must not be lower
+                than Minimum Age.
+              </td>
+              <td><code>25</code></td>
+              <td class="m">99, 100 or 101 to mean “no limit”; “N/A”.</td>
+            </tr>
+            <tr>
+              <td class="n">10</td>
+              <td class="f">
+                <b>Priority Program Populations</b>
+                <div>
+                  <i class="opt">Optional</i><i class="flt">Filterable</i>
+                </div>
+              </td>
+              <td>
+                One or more values from the Priority Populations list, separated
+                by ;. If the program is open to all, list all seven. Blank rows
+                only appear when no population is selected.
+              </td>
+              <td><code>Foster Youth; Pregnant or Parenting</code></td>
+              <td class="m">
+                “Open to everyone”; “N/A”; “Justice Involved” without the
+                hyphen.
+              </td>
+            </tr>
+            <tr>
+              <td class="n">11</td>
+              <td class="f">
+                <b>Eligibility Criteria</b>
+                <div><i class="opt">Optional</i></div>
+              </td>
+              <td>One plain-language statement of who qualifies.</td>
+              <td>
+                <code>Youth ages 18–25 who meet income requirements.</code>
+              </td>
+              <td class="m">Long lists of conditions; line breaks.</td>
+            </tr>
+            <tr>
+              <td class="n">12</td>
+              <td class="f">
+                <b>How to Enroll</b>
+                <div><i class="opt">Optional</i></div>
+              </td>
+              <td>One plain-language instruction for how to apply or join.</td>
+              <td><code>Apply online or contact intake.</code></td>
+              <td class="m">Line breaks; multiple paragraphs.</td>
+            </tr>
+            <tr class="g">
+              <th colspan="5">Location and contact</th>
+            </tr>
+            <tr>
+              <td class="n">13</td>
+              <td class="f">
+                <b>Address</b>
+                <div><i class="con">Conditional</i></div>
+              </td>
+              <td>
+                One full address: Street, City, State ZIP. Required for
+                in-person programs; leave blank for virtual-only.
+              </td>
+              <td><code>123 Main St, Los Angeles, CA 90012</code></td>
+              <td class="m">Missing state; line breaks; “N/A”.</td>
+            </tr>
+            <tr>
+              <td class="n">14</td>
+              <td class="f">
+                <b>Service Planning Area(s)</b>
+                <div>
+                  <i class="opt">Optional</i><i class="flt">Filterable</i>
+                </div>
+              </td>
+              <td>
+                One or more of SPA 1 to SPA 8, separated by ;. To appear under
+                every SPA, list all eight. For a program split by provider
+                location, list only that location’s SPAs. Blank rows only appear
+                when no SPA is selected.
+              </td>
+              <td><code>SPA 4; SPA 7</code></td>
+              <td class="m">
+                “N/A”; “Varies by service location”; “SPA 6 - South LA”; “SPA6”.
+              </td>
+            </tr>
+            <tr>
+              <td class="n">15</td>
+              <td class="f">
+                <b>Phone - Type/Purpose + Number</b>
+                <div><i class="opt">Optional</i></div>
+              </td>
+              <td>
+                Label | 10-digit number. Separate multiple entries with ;.
+                Digits only.
+              </td>
+              <td><code>Intake | 3105551212; Hotline | 8005551212</code></td>
+              <td class="m">
+                (818) 367-5043; several numbers under one label; “N/A” as the
+                number.
+              </td>
+            </tr>
+            <tr>
+              <td class="n">16</td>
+              <td class="f">
+                <b>Email - Type/Purpose + Email Address</b>
+                <div><i class="opt">Optional</i></div>
+              </td>
+              <td>Label | email address. Separate multiple entries with ;.</td>
+              <td><code>Intake | intake@example.org</code></td>
+              <td class="m">
+                Missing label; “N/A”; a web address instead of an email.
+              </td>
+            </tr>
+            <tr>
+              <td class="n">17</td>
+              <td class="f">
+                <b>Website</b>
+                <div><i class="opt">Optional</i></div>
+              </td>
+              <td>One full URL starting with https://.</td>
+              <td><code>https://example.org/program</code></td>
+              <td class="m">
+                No https://; two links in one cell; text such as “TBD”.
+              </td>
+            </tr>
+            <tr>
+              <td class="n">18</td>
+              <td class="f">
+                <b>Hours of Operation</b>
+                <div><i class="opt">Optional</i></div>
+              </td>
+              <td>No required format.</td>
+              <td>
+                <code>Mon-Fri | 9:00am-5:00pm; Sat | 10:00am-2:00pm</code>
+              </td>
+              <td class="m">—</td>
+            </tr>
+            <tr class="g">
+              <th colspan="5">Delivery and access</th>
+            </tr>
+            <tr>
+              <td class="n">19</td>
+              <td class="f">
+                <b>Virtual / In-Person / Both</b>
+                <div><i class="opt">Optional</i></div>
+              </td>
+              <td>Virtual, In-Person, or Virtual and In-Person.</td>
+              <td><code>Virtual and In-Person</code></td>
+              <td class="m">“Neither”; “N/A”; “Both”.</td>
+            </tr>
+            <tr>
+              <td class="n">20</td>
+              <td class="f">
+                <b>Transportation Assistance</b>
+                <div><i class="opt">Optional</i></div>
+              </td>
+              <td>Yes | details, No, or N/A.</td>
+              <td><code>Yes | Bus passes available</code></td>
+              <td class="m">“Yes, bus pass”; “Varies by site”.</td>
+            </tr>
+            <tr>
+              <td class="n">21</td>
+              <td class="f">
+                <b>Service Languages</b>
+                <div>
+                  <i class="opt">Optional</i><i class="flt">Filterable</i>
+                </div>
+              </td>
+              <td>
+                One or more values from the Languages list, separated by ;. If
+                services are available in any language, list all 14. Blank rows
+                only appear when no language is selected.
+              </td>
+              <td><code>English; Spanish; Vietnamese</code></td>
+              <td class="m">
+                “Spanish (varies by site)”; “All”; “N/A”. Put extra detail in
+                Language Notes.
+              </td>
+            </tr>
+            <tr>
+              <td class="n">22</td>
+              <td class="f">
+                <b>Language Notes</b>
+                <div><i class="opt">Optional</i></div>
+              </td>
+              <td>
+                Optional note shown next to the language list. Soft maximum of
+                200 characters.
+              </td>
+              <td><code>Other languages available by appointment.</code></td>
+              <td class="m">
+                Putting language names here instead of Service Languages.
+              </td>
+            </tr>
+            <tr>
+              <td class="n">23</td>
+              <td class="f">
+                <b>Accessibility Accommodations</b>
+                <div><i class="opt">Optional</i></div>
+              </td>
+              <td>No required format.</td>
+              <td><code>Wheelchair accessible; ASL interpretation</code></td>
+              <td class="m">—</td>
+            </tr>
+            <tr class="g">
+              <th colspan="5">Referrals and requirements</th>
+            </tr>
+            <tr>
+              <td class="n">24</td>
+              <td class="f">
+                <b>POC (Point of Contact for Referrals)</b>
+                <div><i class="opt">Optional</i></div>
+              </td>
+              <td>
+                Name | Title | Phone | Email. Keep all 3 pipes and leave missing
+                parts blank. Separate people with ;. Phone is 10 digits.
+              </td>
+              <td>
+                <code
+                  >Debby Shebby | Program Manager | | debby@example.org</code
+                >
+              </td>
+              <td class="m">A name or job title alone; “N/A”.</td>
+            </tr>
+            <tr>
+              <td class="n">25</td>
+              <td class="f">
+                <b>Required Documents to Enroll</b>
+                <div><i class="opt">Optional</i></div>
+              </td>
+              <td>
+                Documents a participant must provide, separated by ;, or N/A.
+              </td>
+              <td><code>Photo ID; Proof of age; Proof of income</code></td>
+              <td class="m">Long explanations; line breaks.</td>
+            </tr>
+            <tr>
+              <td class="n">26</td>
+              <td class="f">
+                <b>Medi-Cal / Insurance</b>
+                <div><i class="opt">Optional</i></div>
+              </td>
+              <td>One short requirement statement, or N/A.</td>
+              <td><code>Medi-Cal required</code></td>
+              <td class="m">“Yes” or “No” without saying what is required.</td>
+            </tr>
+            <tr>
+              <td class="n">27</td>
+              <td class="f">
+                <b>Program Duration</b>
+                <div><i class="opt">Optional</i></div>
+              </td>
+              <td>No required format.</td>
+              <td><code>Ongoing</code></td>
+              <td class="m">—</td>
+            </tr>
+            <tr>
+              <td class="n">28</td>
+              <td class="f">
+                <b>Funding Source</b>
+                <div><i class="opt">Optional</i></div>
+              </td>
+              <td>No required format.</td>
+              <td><code>CFCI; State Grant</code></td>
+              <td class="m">—</td>
+            </tr>
+            <tr>
+              <td class="n">29</td>
+              <td class="f">
+                <b>General Notes</b>
+                <div><i class="opt">Optional</i></div>
+              </td>
+              <td>
+                Anything else that does not fit another field, such as event
+                dates. Not searchable.
+              </td>
+              <td><code>Annual event held each February.</code></td>
+              <td class="m">
+                Putting information here that belongs in a specific field.
+              </td>
+            </tr>
+            <tr class="g">
+              <th colspan="5">Record information</th>
+            </tr>
+            <tr>
+              <td class="n">30</td>
+              <td class="f">
+                <b>Date Updated</b>
+                <div><i class="req">Required</i></div>
+              </td>
+              <td>
+                MM/DD/YYYY: the date this row was last reviewed or updated.
+              </td>
+              <td><code>09/14/2026</code></td>
+              <td class="m">“N/A”; other date formats.</td>
+            </tr>
+            <tr>
+              <td class="n">31</td>
+              <td class="f">
+                <b>POC (Person of Contact)</b>
+                <div><i class="req">Required</i></div>
+              </td>
+              <td>
+                The person who completed or reviewed this row. Name | Title |
+                Phone | Email. Keep all 3 pipes and leave missing parts blank.
+              </td>
+              <td>
+                <code
+                  >Sally Wally | Program Analyst | 3105559999 |
+                  sally@example.org</code
+                >
+              </td>
+              <td class="m">Missing pipes; phone typed as “N/A”.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">
+        Fields with “No required format” accept any text. The example only shows
+        one way to write it. Required means the cell must be filled in.
+        Conditional means it depends on the program, as described.
+      </p>
+    </main>
+  </body>
+</html>
